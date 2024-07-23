@@ -64,7 +64,7 @@ As you can see, it has totally different helps for each subcommand, which is not
 Also, the definition of each command is simple:
 
 ```crystal
-require "../src/polydocopt.cr"
+require "polydocopt"
 
 struct Hello < Polydocopt::Command
   @name = "hello"
