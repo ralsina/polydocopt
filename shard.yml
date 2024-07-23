@@ -7,3 +7,7 @@ authors:
 crystal: '>= 1.13.0'
 
 license: MIT
+
+dependencies:
+  docopt:
+    github: chenkovsky/docopt.cr
