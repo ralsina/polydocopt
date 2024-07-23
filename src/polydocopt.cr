@@ -8,14 +8,14 @@ module Polydocopt
 
   abstract struct Command
     property options : Hash(String, (Nil | String | Int32 | Bool | Array(String)))
-    property name : String = "command"
+    class_property name : String = "command"
     class_property doc : String = ""
 
     def initialize(@options)
     end
 
     def self.register
-      COMMANDS[name.downcase] = self
+      COMMANDS[self.name] = self
     end
 
     def run : Int32

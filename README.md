@@ -5,7 +5,7 @@ A subcommand-oriented version of docopt.
 Modern command line tools often have totally different subcommands that have different options and arguments.
 
 This is a library to make it easier to write such tools
-while keeping with the spirit of [docopt](https://docopt.org/).
+while keeping with the spirit of [docopt](http://docopt.org/).
 
 **NOTE:** This builds on the excellent [docopt.cr!](https://github.com/chenkovsky/docopt.cr)
 

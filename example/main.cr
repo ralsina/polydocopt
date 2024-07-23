@@ -1,11 +1,10 @@
 # Example of polydocopt usage
+# We define a couple of commands
 
 require "../src/polydocopt.cr"
 
-# We define a couple of commands
-
 struct Hello < Polydocopt::Command
-  @name = "hello"
+  @@name = "hello"
   @@doc = <<-HELP
 Says hello to the world
 
@@ -29,7 +28,7 @@ end
 Hello.register()
 
 struct Bye < Polydocopt::Command
-  @name = "bye"
+  @@name = "bye"
   @@doc = <<-HELP
 Says bye to the world
 
