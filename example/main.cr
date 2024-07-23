@@ -25,7 +25,7 @@ HELP
   end
 end
 
-Hello.register()
+Hello.register
 
 struct Bye < Polydocopt::Command
   @@name = "bye"
@@ -49,7 +49,7 @@ HELP
   end
 end
 
-Bye.register()
+Bye.register
 
 # We run the main function with the command line arguments
 exit(Polydocopt.main("say", ARGV))

@@ -1,10 +1,13 @@
 require "docopt"
 
-# TODO: Write documentation for `Polydocopt`
+# See README.md
 
 module Polydocopt
   extend self
   VERSION = "0.1.0"
+
+  # A command. Subclass this to define a new command.
+  # You can see an example in example/main.cr
 
   abstract struct Command
     property options : Hash(String, (Nil | String | Int32 | Bool | Array(String)))
@@ -29,7 +32,7 @@ module Polydocopt
   private def self.help(progname : String, args : Array(String)) : Int32
     help_doc = <<-HELP
 Help about the #{progname} command.
-  
+
 Usage:
   #{progname} help [COMMAND]
 HELP
@@ -40,7 +43,7 @@ HELP
     options = Docopt.docopt(help_doc, args)
     if !options["COMMAND"]
       puts help_doc
-      return 0
+      0
     else
       command_name = options["COMMAND"]
       command = COMMANDS.fetch(command_name, nil)
@@ -54,9 +57,10 @@ HELP
     end
   end
 
+  # Main function. Call this with the program name and ARGV
+  # See example/main.cr for an example
   def self.main(progname, args : Array(String)) : Int32
-    # Register the help command:
-
+    # The help command is special
     if args.size < 1 ||
        args[0] == "help" ||
        args[0] == "--help" ||
