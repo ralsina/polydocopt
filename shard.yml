@@ -1,0 +1,9 @@
+name: polydocopt
+version: 0.1.0
+
+authors:
+  - Roberto Alsina <roberto.alsina@gmail.com>
+
+crystal: '>= 1.13.0'
+
+license: MIT
