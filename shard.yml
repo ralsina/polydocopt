@@ -10,4 +10,4 @@ license: MIT
 
 dependencies:
   docopt:
-    github: chenkovsky/docopt.cr
+    github: ralsina/docopt.cr
