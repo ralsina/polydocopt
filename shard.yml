@@ -1,5 +1,5 @@
 name: polydocopt
-version: 0.1.1
+version: 0.2.0
 
 authors:
   - Roberto Alsina <roberto.alsina@gmail.com>
@@ -11,3 +11,12 @@ license: MIT
 dependencies:
   docopt:
     github: ralsina/docopt.cr
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    tag: v1.7.0-dev
+
+targets:
+  say:
+    main: example/main.cr
