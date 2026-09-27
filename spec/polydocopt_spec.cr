@@ -119,6 +119,32 @@ describe Polydocopt do
       end
     end
 
+    context "with help flags after the -- separator" do
+      it "treats them as arguments, not help requests" do
+        code, stdout, stderr = run_main(["greet", "--", "--help"])
+        code.should eq(1)
+        stdout.should be_empty
+        stderr.should contain("Usage:")
+      end
+
+      it "treats -h after -- the same way" do
+        code, _stdout, stderr = run_main(["greet", "--", "-h"])
+        code.should eq(1)
+        stderr.should contain("Usage:")
+      end
+    end
+
+    it "parses each command once, reusing the compiled pattern" do
+      SpecGreet.compiled.should be SpecGreet.compiled
+      first_code, _stdout, _stderr = run_main(["greet", "-p", "mars"])
+      second_code, _stdout, _stderr = run_main(["greet", "-p", "mars"])
+      first_code.should eq(0)
+      second_code.should eq(0)
+      SpecGreet.last_planet.should eq("mars")
+      # matching did not grow or alter the cached pattern
+      SpecGreet.compiled.options.size.should be > 0
+    end
+
     context "with --help on a known command" do
       it "prints that command's documentation" do
         code, stdout, stderr = run_main(["greet", "--help"])

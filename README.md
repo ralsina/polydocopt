@@ -114,6 +114,11 @@ The rules for a command's documentation are:
 * Command names must be unique (registering a duplicate raises)
 * The name `help` is reserved
 
+Each command's documentation is parsed once and cached (see
+`Command.compiled`); dispatching is a plain argv match against the cached
+pattern. Help requests are only honored before a `--` separator, like in
+docopt itself.
+
 If you want to test your own commands, `Polydocopt.main` accepts optional
 `stdout` and `stderr` arguments so you can capture output without touching
 the real streams:

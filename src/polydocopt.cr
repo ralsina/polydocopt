@@ -32,11 +32,24 @@ module Polydocopt
       COMMANDS[@@name] = self
     end
 
+    # The command's doc, parsed once per command no matter how many
+    # times dispatch runs.
+    def self.compiled : Docopt::Compiled
+      if pattern = COMPILED[@@name]?
+        pattern
+      else
+        COMPILED[@@name] = Docopt.parse(@@doc)
+      end
+    end
+
     abstract def run : Int32
   end
 
   # Command class registry
   COMMANDS = {} of String => Command.class
+
+  # Parsed docs for the registered commands, keyed by command name
+  COMPILED = {} of String => Docopt::Compiled
 
   # Main entry point. Call this with the program name and ARGV.
   # Returns the exit code of the executed command, so a typical
@@ -55,12 +68,12 @@ module Polydocopt
     return print_command_help(command, stdout) if wants_help?(args)
 
     begin
-      options = Docopt.docopt(command.doc, args, help: false, exit: false)
+      options = Docopt.match(command.compiled, args, help: false, exit: false)
     rescue error : Docopt::DocoptLanguageError
       stderr.puts "Invalid documentation for command '#{command_name}': #{error.message}"
       return 1
     rescue Docopt::DocoptExit
-      stderr.puts Docopt::DocoptExit.usage
+      stderr.puts command.compiled.usage
       stderr.puts
       stderr.puts "See '#{progname} help #{command_name}' for more information."
       return 1
@@ -70,7 +83,10 @@ module Polydocopt
   end
 
   private def self.wants_help?(args : Array(String)) : Bool
-    args.skip(1).any? { |arg| arg == "-h" || arg == "--help" }
+    # Only words before a "--" separator can be a help request; a
+    # literal "-h" after it is a positional argument.
+    limit = args.index("--") || args.size
+    args.skip(1).first(limit - 1).any? { |arg| arg == "-h" || arg == "--help" }
   end
 
   private def self.help_command(progname : String, args : Array(String), stdout : IO, stderr : IO) : Int32
