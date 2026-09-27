@@ -1,3 +1,8 @@
+> **Note: polydocopt is now part of [docopt.cr](https://github.com/ralsina/docopt.cr) (>= 0.6.0).**
+> This shard keeps working unchanged — it is a thin re-export of
+> `require "docopt/dispatch"` (Docopt::Dispatch) with a Polydocopt
+> alias — but new projects can depend on docopt directly.
+
 # polydocopt
 
 A subcommand-oriented version of docopt.
